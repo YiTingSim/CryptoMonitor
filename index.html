@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Cryptocurrency Price Monitoring System (CryptoMonitor)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+  <script src="global.js"></script>
+  <script src="math.js"></script>
+  <script src="api.js"></script>
+  <script src="portfolio.js"></script>
+  <script src="chart.js"></script>
+  <script src="app.js"></script>
+</head>
+
+<body>
+  <header class="topBar">
+    <div>
+      <h1>CryptoMonitor</h1>
+      <p>Price tracking, prediction and portfolio manager</p>
+    </div>
+
+    <div class="searchBox">
+      <input type="text" id="coinInput" placeholder="Search BTC, ETH, Bitcoin...">
+      <button id="searchBtn">Search</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tabButton active" data-tab="market" onclick="showTab('market')">Market</button>
+    <button class="tabButton" data-tab="chart" onclick="showTab('chart')">Chart</button>
+    <button class="tabButton" data-tab="portfolio" onclick="showTab('portfolio')">Portfolio</button>
+  </nav>
+
+  <main>
+    <section class="summary">
+      <div>
+        <span>Market Cap</span>
+        <strong id="marketCap">-</strong>
+      </div>
+      <div>
+        <span>24h Volume</span>
+        <strong id="marketVolume">-</strong>
+      </div>
+      <div>
+        <span>BTC Dominance</span>
+        <strong id="btcDominance">-</strong>
+      </div>
+    </section>
+
+    <section id="market" class="page active">
+      <div class="sectionTitle">
+        <h2>Top Cryptocurrencies</h2>
+        <button id="refreshMarketBtn">Refresh</button>
+      </div>
+      <p id="marketMessage" class="message"></p>
+
+      <div class="tableBox">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="left">Coin</th>
+              <th>Price</th>
+              <th>24h</th>
+              <th>Market Cap</th>
+              <th>Portfolio</th>
+            </tr>
+          </thead>
+          <tbody id="coinList">
+            <tr><td colspan="6">Loading coins...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="chart" class="page">
+      <div class="sectionTitle chartTitleRow">
+        <div>
+          <h2 id="chartTitle">Bitcoin Chart</h2>
+          <p id="chartSubTitle">Historical price with indicators</p>
+        </div>
+        <div class="chartActions">
+          <button id="addCurrentBtn">Add to Portfolio</button>
+          <button id="refreshChartBtn">Refresh</button>
+        </div>
+      </div>
+
+      <p id="chartMessage" class="message"></p>
+
+      <div class="chartInfo">
+        <div>
+          <span>Current Price</span>
+          <strong id="chartPrice">-</strong>
+        </div>
+        <div>
+          <span>24h Change</span>
+          <strong id="chartChange">-</strong>
+        </div>
+        <div>
+          <span>24h Volume</span>
+          <strong id="chartVolume">-</strong>
+        </div>
+        <div>
+          <span>7 Day Prediction</span>
+          <strong id="predictionPrice">-</strong>
+        </div>
+      </div>
+
+      <div class="indicatorGrid">
+        <div>
+          <span>MA 7</span>
+          <strong id="ma7Value">-</strong>
+        </div>
+        <div>
+          <span>MA 25</span>
+          <strong id="ma25Value">-</strong>
+        </div>
+        <div>
+          <span>RSI</span>
+          <strong id="rsiValue">-</strong>
+        </div>
+        <div>
+          <span>MACD</span>
+          <strong id="macdValue">-</strong>
+        </div>
+        <div>
+          <span>Prediction Trend</span>
+          <strong id="trendText">-</strong>
+        </div>
+      </div>
+
+      <div class="toolBar">
+        <button class="toolButton active" data-tool="pointer" onclick="setTool('pointer')">Pointer</button>
+        <button class="toolButton" data-tool="trend" onclick="setTool('trend')">Trend Line</button>
+        <button class="toolButton" data-tool="support" onclick="setTool('support')">Support / Resistance</button>
+        <button class="toolButton" data-tool="note" onclick="setTool('note')">Note</button>
+        <button onclick="zoomChart(1.2)">Zoom In</button>
+        <button onclick="zoomChart(0.8)">Zoom Out</button>
+        <button onclick="resetChartZoom()">Reset Zoom</button>
+        <button class="clearBtn" onclick="clearDrawings()">Clear Marks</button>
+      </div>
+
+      <p id="toolStatus" class="message">Ready</p>
+
+      <div class="chartBox">
+        <canvas id="priceChart"></canvas>
+      </div>
+    </section>
+
+    <section id="portfolio" class="page">
+      <div class="sectionTitle">
+        <h2>My Portfolio</h2>
+        <button id="refreshPortfolioBtn">Refresh</button>
+      </div>
+
+      <div class="portfolioSummary">
+        <div>
+          <span>Total Value</span>
+          <strong id="portfolioTotal">$0.00</strong>
+        </div>
+        <div>
+          <span>Total Cost</span>
+          <strong id="portfolioCost">$0.00</strong>
+        </div>
+        <div>
+          <span>Profit / Loss</span>
+          <strong id="portfolioProfit">$0.00</strong>
+        </div>
+      </div>
+
+      <p id="portfolioMessage" class="message"></p>
+
+      <div class="tableBox">
+        <table>
+          <thead>
+            <tr>
+              <th class="left">Coin</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Buy Price</th>
+              <th>Value</th>
+              <th>P/L %</th>
+              <th>P/L $</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="portfolioList">
+            <tr><td colspan="8">No coins added yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>CryptoMonitor | Data from CoinGecko API</footer>
+</body>
+</html>

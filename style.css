@@ -1,0 +1,330 @@
+﻿* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: white;
+  color: black;
+  min-height: 100vh;
+}
+
+.topBar {
+  background: lightgoldenrodyellow;
+  border-bottom: 1px solid white;
+  padding: 18px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 6px;
+}
+
+.topBar p,
+#chartSubTitle,
+.message,
+span,
+small {
+  color: black;
+}
+
+.searchBox {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+input,
+button,
+select {
+  font: inherit;
+}
+
+#coinInput,
+select,
+.portfolioInput {
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  background: white;
+}
+
+#coinInput {
+  width: 280px;
+  padding: 10px;
+}
+
+button {
+  background: lightseagreen;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: lightskyblue;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+}
+
+.tabButton {
+  background: white;
+  color: lightseagreen;
+  border: 1px solid lightblue;
+}
+
+.tabButton.active,
+.toolButton.active {
+  background: lightseagreen;
+  color: white;
+}
+
+main {
+  width: min(1180px, 94%);
+  margin: 0 auto;
+}
+
+.summary,
+.chartInfo,
+.indicatorGrid,
+.portfolioSummary {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summary {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.chartInfo {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.indicatorGrid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.portfolioSummary {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.summary div,
+.chartInfo div,
+.indicatorGrid div,
+.portfolioSummary div,
+.page {
+  background: white;
+  border: 1px solid lightblue;
+  border-radius: 8px;
+}
+
+.summary div,
+.chartInfo div,
+.indicatorGrid div,
+.portfolioSummary div {
+  padding: 14px;
+}
+
+.summary span,
+.chartInfo span,
+.indicatorGrid span,
+.portfolioSummary span {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.summary strong,
+.chartInfo strong,
+.indicatorGrid strong,
+.portfolioSummary strong {
+  font-size: 18px;
+}
+
+.page {
+  display: none;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.page.active {
+  display: block;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.chartActions,
+.toolBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+select {
+  padding: 9px 10px;
+}
+
+.message {
+  min-height: 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.tableBox {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid lightgrey ;
+  text-align: center;
+  white-space: nowrap;
+}
+
+th {
+  background: lightgoldenrodyellow ;
+  color: black;
+}
+
+.left {
+  text-align: left;
+}
+
+.coinRow {
+  cursor: pointer;
+}
+
+.coinRow:hover {
+  background: white;
+}
+
+.coinName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coinName img {
+  width: 28px;
+  height: 28px;
+}
+
+small {
+  display: block;
+  margin-top: 2px;
+}
+
+.good {
+  color: forestgreen;
+}
+
+.bad {
+  color: red;
+}
+
+.neutral {
+  color: black;
+}
+
+.smallBtn,
+.clearBtn,
+.toolButton {
+  padding: 7px 10px;
+  font-size: 14px;
+}
+
+.toolButton {
+  background: white;
+  color: lightseagreen;
+  border: 1px solid white;
+}
+
+.clearBtn {
+  background: red;
+}
+
+.clearBtn:hover {
+  background: darkred;
+}
+
+.chartBox {
+  height: 440px;
+  background: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+#priceChart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.portfolioInput {
+  width: 92px;
+  padding: 7px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .summary,
+  .chartInfo,
+  .indicatorGrid,
+  .portfolioSummary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sectionTitle,
+  .chartTitleRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 620px) {
+  .summary,
+  .chartInfo,
+  .indicatorGrid,
+  .portfolioSummary {
+    grid-template-columns: 1fr;
+  }
+
+  #coinInput,
+  .searchBox button {
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 9px 7px;
+    font-size: 14px;
+  }
+
+  .chartBox {
+    height: 340px;
+  }
+}
