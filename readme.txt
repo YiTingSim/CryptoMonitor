@@ -29,5 +29,5 @@ ii) Option B (Local Web Server - Recommended):
 To avoid potential strict cross-origin browser policies when fetching data or accessing local storage, open the project folder in a code editor like VS Code and use an extension like "Live Server" to host the files locally (e.g., at http://127.0.0.1:5500).
 
 iii) Option C (GitHub link)
-If the previous two option is not working, you can simply copy and paste the following web URL to your web browser to open the web application:
-https://github.com/YiTingSim/CryptoMonitor.git
+If the previous two option is not working, you may simply copy and paste the following web URL to your web browser to open the web application:
+https://yitingsim.github.io/CryptoMonitor/
